@@ -1,7 +1,8 @@
-import React  from 'react';
+import React, { Component }  from 'react';
 import './Login.css';
 import ReactDOM from 'react-dom';
-function Login(){
+class Login extends Component {
+    render() {
     return (
         <div className="Login">
             <div className="form-box">
@@ -36,6 +37,8 @@ function Login(){
         </div>
     );
     
+    }
+
 }
 
 
@@ -59,4 +62,7 @@ function ClickUser(){
     z.style.left ="0px";
     
 }
+
+
+
 export default Login;

@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
 import '../../components/MenuTop.css';
-function Home(){
+class Home extends Component{
+    render(){
     return (
         <section></section>
     );
+    }
 }
 
 export default Home;
