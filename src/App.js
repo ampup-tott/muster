@@ -1,22 +1,45 @@
-import React, {Component} from 'react';
-
+import React, { Component } from 'react';
 import './App.css';
-import MenuTop from './components/MenuTop';
+
+import routes from './routes';
+
+import { Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 
-import {BrowserRouter as Router ,Route , Link} from 'react-router-dom';
 
+class App extends Component {
+  render() {
+    return (
+      <Router>
+        <div className="App">
+          <div id="bodyPage">
+            <Switch>
+              { this.showContentMenu(routes) }
+            </Switch>
+          </div>
+        </div>
+      </Router>
+    );
+  }
 
-function App() {
-  return (
-    <Router>
-    <div className="App">  
-      <MenuTop/>
-      
-    </div>
-    
-    </Router>
-  );
+  showContentMenu = (routes) => {
+    var result = null;
+
+    if (routes.length > 0) {
+        result = routes.map((route, index) => {
+            return (
+                <Route 
+                    key={index} 
+                    path={route.path} 
+                    exact={route.exact} 
+                    component={route.main} 
+                />
+            );
+        });
+    }
+    return result;
+  }
 }
 
 export default App;
