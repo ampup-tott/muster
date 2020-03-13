@@ -17,8 +17,11 @@ class Login extends Component {
             passAdmin: '',
             show : false,
             alertWarning:'',
-            name : ''
+            name : '',
         };
+        this.data = { 
+            admin : []
+        }
 
         this.onHandleChangeAdmin = this.onHandleChangeAdmin.bind(this)
         this.onHandleSubmitAdmin = this.onHandleSubmitAdmin.bind(this)
@@ -60,13 +63,12 @@ class Login extends Component {
             }
             else {
                 localStorage.setItem('admin', JSON.stringify({
-                    username : username ,
-                    
+                    username : username ,    
                 }));
                 this.setState({
-                    name : user_info.name
-                }) 
-               
+                    name : user_info.name,
+                })
+                this.data.admin = user_info
             }
         }
         else if ( username == 0  || password == 0){
@@ -104,12 +106,14 @@ class Login extends Component {
     render() {
         var {location} = this.props
         var name = this.state.name
+        var data = this.data
         var loggedInUser = localStorage.getItem('admin')
         if(loggedInUser !== null){
             return <Redirect to={{
                 pathname : `/Admin/${name}`,
                 state : {
-                    from : location
+                    from : location,
+                    data : data
                 } 
             }}/> 
             
