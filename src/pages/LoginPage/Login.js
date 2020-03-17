@@ -18,11 +18,9 @@ class Login extends Component {
             show : false,
             alertWarning:'',
             name : '',
+            data : {}
         };
-        this.data = { 
-            admin : []
-        }
-
+    
         this.onHandleChangeAdmin = this.onHandleChangeAdmin.bind(this)
         this.onHandleSubmitAdmin = this.onHandleSubmitAdmin.bind(this)
         
@@ -50,6 +48,7 @@ class Login extends Component {
         await axios.post(`${url}/login`, { username, password })
             .then(res => {
                 user_info = res.data.data;
+                
             })
             .catch(error => {
                 console.log(error.message);
@@ -67,8 +66,8 @@ class Login extends Component {
                 }));
                 this.setState({
                     name : user_info.name,
+                    data : user_info 
                 })
-                this.data.admin = user_info
             }
         }
         else if ( username == 0  || password == 0){
@@ -106,14 +105,14 @@ class Login extends Component {
     render() {
         var {location} = this.props
         var name = this.state.name
-        var data = this.data
-        var loggedInUser = localStorage.getItem('admin')
-        if(loggedInUser !== null){
+        var data = this.state.data
+        var loggedInAdmin = localStorage.getItem('admin')
+        if(loggedInAdmin !== null){
             return <Redirect to={{
                 pathname : `/Admin/${name}`,
                 state : {
                     from : location,
-                    data : data
+                    dataAdmin : data
                 } 
             }}/> 
             

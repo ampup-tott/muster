@@ -5,13 +5,25 @@ import { Redirect } from 'react-router-dom';
 
 
 
-class Admin extends Component { 
+class Admin extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            
+        }
+    }
+
     render() {
         var {location} = this.props
         var {match} = this.props
-        console.log( location ,match)
+       
+        
+        console.log( location)
         if(localStorage.length === 0){
             return <Redirect to='/Login'/>
+        }
+        else {
+            console.log(location.state.data)
         }
         return(
             <div className="Admin"> 
