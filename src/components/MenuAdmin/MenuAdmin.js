@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './MenuAdmin.css'
+
 import clsx from 'clsx';
 
 import { makeStyles , useTheme } from '@material-ui/core/styles';
@@ -16,11 +18,13 @@ import ClassIcon from '@material-ui/icons/Class';
 import Drawer from '@material-ui/core/Drawer';
 import Divider from '@material-ui/core/Divider';
 import GroupIcon from '@material-ui/icons/Group';
+import { green } from '@material-ui/core/colors';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListAltRoundedIcon from '@material-ui/icons/ListAltRounded';
+import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import IconButton from '@material-ui/core/IconButton';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -93,7 +97,7 @@ const useStyles = makeStyles(theme => ({
   },
   toolbar: {
     height: drawerHeight,
-    IconButton
+    
   },
   IconCloseDrawer:{
     marginTop: 7,
@@ -115,12 +119,15 @@ export default function MenuTopAdmin() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const openInforAccount = Boolean(anchorEl);
   const [openMenuleft, setOpen] = React.useState(false);
+  
 
   const handleDrawerOpen = () => {
     setOpen(true);
+    
   };
   const handleDrawerClose = () => {
     setOpen(false);
+    
   };
   const handleMenu = event => {
     setAnchorEl(event.currentTarget);
@@ -131,7 +138,7 @@ export default function MenuTopAdmin() {
 
   const logOut = () => {
     localStorage.clear();
-    window.history.go('/Login')
+    window.location.reload()
   }
 
   const showMenu = (routeMenuAdmin) => {
@@ -140,7 +147,7 @@ export default function MenuTopAdmin() {
       result = routeMenuAdmin.map((route, index) => {
           return (
             <ListItem button key={route.primary}>
-            <ListItemIcon>{route.icon}</ListItemIcon>
+            <ListItemIcon style={{color : '#34495e'}}>{route.icon}</ListItemIcon>
             <ListItemText primary={route.primary} />
             </ListItem>
           );
@@ -149,6 +156,7 @@ export default function MenuTopAdmin() {
     return result;
   }
   
+  var nameAdmin = localStorage.getItem('admin')
 
   return (
     <div className={classes.root}>
@@ -168,9 +176,9 @@ export default function MenuTopAdmin() {
           PRESENCE
         </Typography>
         <Avatar alt="Admin" src="#" />
-        <div>
-          <b className='text-light'>Admin:</b>
-         
+        <div id="infoAdmin" className="ml-3 mr-2" >
+          <b className='text-light mr-1'>Admin:</b>
+          <i>{nameAdmin}</i>
         </div>
         <div>
           <IconButton style={{ outline: "0" }}
@@ -224,9 +232,20 @@ export default function MenuTopAdmin() {
                 </IconButton>
             </div>
             <Divider />
-            <div className={classes.toolbar}> 
-                 <Avatar alt='Admin' src="#" className={classes.AvatarLeft} />
-                  {}
+            <div className={classes.toolbar}>
+              <div className="row">
+                <div className='col-3'>
+                  <Avatar alt='Admin' src="#" className={classes.AvatarLeft} />
+                </div>
+                <div style={{position : 'absolute'}} className='col ml-5 mt-2'>
+                  <b className='ml-4 mr-1'>Admin:</b>
+                  <i>{nameAdmin}</i><br></br> 
+                </div>
+                <div style={{position : 'absolute'}} className='col offset-3 ml-5 mt-4'>
+                  <i className='ml-4' ><FiberManualRecordIcon style={{fontSize: 12  , color:'#76ff03'}}/></i>
+                  <small>Online</small>
+                </div>
+              </div>  
             </div>
             <Divider />
               <List className={classes.ListItemMenuLeft}>

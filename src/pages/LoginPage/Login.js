@@ -17,7 +17,6 @@ class Login extends Component {
             passAdmin: '',
             show : false,
             alertWarning:'',
-            name : '',
             data : {}
         };
     
@@ -61,9 +60,7 @@ class Login extends Component {
                
             }
             else {
-                localStorage.setItem('admin', JSON.stringify({
-                    username : username ,    
-                }));
+                localStorage.setItem('admin', user_info.name);
                 this.setState({
                     name : user_info.name,
                     data : user_info 
@@ -104,12 +101,11 @@ class Login extends Component {
 
     render() {
         var {location} = this.props
-        var name = this.state.name
         var data = this.state.data
         var loggedInAdmin = localStorage.getItem('admin')
         if(loggedInAdmin !== null){
             return <Redirect to={{
-                pathname : `/Admin/${name}`,
+                pathname : `/Admin/${loggedInAdmin}`,
                 state : {
                     from : location,
                     dataAdmin : data
@@ -139,7 +135,7 @@ class Login extends Component {
 
                             <button type="submit" className="submitBtn">Log In</button>
                         </form>
-
+                        
                         <form id="admin" className="inputGroup" >
                             <input  type="email" value={this.idAdmin} onChange={this.onHandleChangeAdmin}
                             name="idAdmin" className="inputField" 

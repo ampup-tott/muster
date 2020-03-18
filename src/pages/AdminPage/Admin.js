@@ -16,14 +16,9 @@ class Admin extends Component {
     render() {
         var {location} = this.props
         var {match} = this.props
-       
-        
-        console.log( location)
+        console.log(location)
         if(localStorage.length === 0){
             return <Redirect to='/Login'/>
-        }
-        else {
-            console.log(location.state.data)
         }
         return(
             <div className="Admin"> 
