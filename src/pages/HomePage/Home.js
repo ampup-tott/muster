@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import Header from './Header'
 import Middel from './Middle'
+import Footer from './Footer';
 
 class Home extends Component {
 
@@ -9,6 +10,7 @@ class Home extends Component {
         return (<>
             <Header />
             <Middel />
+            <Footer />
             </>
         );
         
