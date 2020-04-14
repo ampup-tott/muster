@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import './Login.css';
 import Header from './Header';
+
 import axios from 'axios';
-import {Redirect } from 'react-router-dom';
+import {Redirect, Route } from 'react-router-dom';
+import {connect} from 'react-redux';
+import * as actions from './../../redux/actions/index' 
 
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button'; 
@@ -17,7 +20,9 @@ class Login extends Component {
             passAdmin: '',
             show : false,
             alertWarning:'',
-            data : {}
+            token: localStorage.token,
+            is_loggedin: false ,
+            redirect :false
         };
     
         this.onHandleChangeAdmin = this.onHandleChangeAdmin.bind(this)
@@ -39,35 +44,31 @@ class Login extends Component {
         event.preventDefault();
         var username = this.state.idAdmin;
         var password = this.state.passAdmin;
-        
         let user_info;
         const url = 'http://localhost:8080';
         let checkEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if(checkEmail.test(username) && password.length > 0 ){
-        await axios.post(`${url}/login`, { username, password })
-            .then(res => {
-                user_info = res.data.data;
-                
-            })
-            .catch(error => {
-                console.log(error.message);
-            })
+        if(checkEmail.test(username) && password.length) {
+            await axios.post(`${url}/login`, { username, password } ,{headers: { 'Content-Type': 'application/json' }})
+                .then(res => {
+                    user_info = res.data.data;
+                })
+                .catch(error => {
+                    console.log(error.message);
+                })
+
             if (!user_info) {
                 this.setState({
                     alertWarning :'Incorrect Username of Password'
                 })
                 this.handleShow();
-               
-            }
-            else {
+            } else {
                 localStorage.setItem('admin', user_info.name);
                 this.setState({
-                    name : user_info.name,
-                    data : user_info 
-                })
+                    is_loggedin: true,
+                    token : user_info.token
+                });
             }
-        }
-        else if ( username == 0  || password == 0){
+        } else if ( username == 0  || password == 0){
             this.setState({
                 alertWarning: 'Please ! fill out this field '
             })
@@ -80,39 +81,32 @@ class Login extends Component {
             this.handleShow();
         }
     }
-        
-
     
-    handleClose   = () => {  
+    handleClose = () => {
         this.setState({
             show : false
         })
     }
   
-    
     handleShow   = () => {
         this.setState({
             show : true
         })
     }
-        
     
-
-
     render() {
-        var {location} = this.props
-        var data = this.state.data
-        var loggedInAdmin = localStorage.getItem('admin')
-        if(loggedInAdmin !== null){
+        var { location } = this.props
+        var admin = localStorage.admin 
+        localStorage.setItem('token', this.state.token);
+        if(this.state.is_loggedin || localStorage.token !== 'undefined') {      
             return <Redirect to={{
-                pathname : `/Admin/${loggedInAdmin}`,
+                pathname : `/admin/${admin}`,
                 state : {
                     from : location,
-                    dataAdmin : data
                 } 
-            }}/> 
-            
+            }}/>
         }
+        
         
         return (
             <div>
@@ -151,16 +145,14 @@ class Login extends Component {
                             <button type="submit" onClick={this.onHandleSubmitAdmin} className="submitBtn">Log In</button>
                         </form>
 
-
                         <div className="social-icons">
                             <i className="fab fa-facebook-square "  ></i>
                             <i className="fab fa-twitter-square" ></i>
                             <i className="fab fa-google-plus-square" ></i>
                         </div>
-
                     </div>
                 </div>
-
+    
                 <Modal show={this.state.show} onHide={this.handleClose} 
                 aria-labelledby="contained-modal-title-vcenter" centered>
                     <Modal.Header style={{backgroundColor: "#34495e"}} closeButton>
@@ -173,15 +165,28 @@ class Login extends Component {
                         </Button>
                     </Modal.Footer>
                 </Modal>
+                
             </div>
+            
         );
 
     }
 
 }
 
+const mapStateToProps = (state) => {
+    return {
+        admin : state.dataAdmin
+    }
+}
 
-
+const mapDispatchToProps = (dispatch , props) => {
+    return {
+        onAddAdmin : (admin) => {
+            dispatch(actions.addAdmin(admin));
+        }
+    }
+}
 
 function ClickAdmin() {
     var x = document.getElementById("user")
@@ -205,4 +210,4 @@ function ClickUser() {
 
 
 
-export default Login;
+export default connect(mapStateToProps , mapDispatchToProps)(Login);

@@ -4,6 +4,15 @@ import Login from './pages/LoginPage/Login';
 import Home from './pages/HomePage/Home';
 import Admin from './pages/AdminPage/Admin';
 
+// const adminLogin = () =>{
+//     if(localStorage.token !== 'undefined'){
+//         return 'ADMIN'
+//     } else {
+//         return 'LOGIN'
+        
+//     }
+// }
+
 const routes = [
     {   
         name: 'HOME',
@@ -31,14 +40,15 @@ const routes = [
     },
     {   
         name: 'LOGIN',
-        path: '/Login',
-        exact: false ,
+        path: '/login',
+        exact: false,
         main: ({location , match}) => <Login location={location} match={match} />
     },
     {
-        path: '/Admin/:name',
-        exact: false ,
+        path: '/admin/:name',
+        exact: true ,
         main: ({ match, location }) => <Admin match={match} location={location} />
     }
 ]
+
 export default routes 
