@@ -6,14 +6,13 @@ import routes from './routes';
 import { Switch } from 'react-router-dom';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-
-
 class App extends Component {
+  
   render() {
     return (
       <Router>
-        <div className="App">
-          <div id="bodyPage">
+        <div className = "App">
+          <div id = "bodyPage">
             <Switch>
               { this.showContentMenu(routes) }
             </Switch>
@@ -25,15 +24,14 @@ class App extends Component {
 
   showContentMenu = (routes) => {
     var result = null;
-
     if (routes.length > 0) {
         result = routes.map((route, index) => {
             return (
                 <Route 
-                    key={index} 
-                    path={route.path} 
-                    exact={route.exact} 
-                    component={route.main} 
+                    key = {index} 
+                    path = {route.path} 
+                    exact = {route.exact} 
+                    component = {route.main} 
                 />
             );
         });

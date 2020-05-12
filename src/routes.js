@@ -41,12 +41,12 @@ const routes = [
     {   
         name: 'LOGIN',
         path: '/login',
-        exact: false,
+        exact: true,
         main: ({location , match}) => <Login location={location} match={match} />
     },
     {
         path: '/admin/:name',
-        exact: true ,
+        exact: false ,
         main: ({ match, location }) => <Admin match={match} location={location} />
     }
 ]
