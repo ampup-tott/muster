@@ -8,10 +8,10 @@ import routes from '../../routes';
 const MenuLink = ({ label, to, activeOnlyWhenExact }) => {
     return (
         <Route path={to} exact={activeOnlyWhenExact} children={({ match }) => {
-            var active = match ? 'active abc' : '';
+            let active = match ? 'active' : '';
             return (
-                <li className={`my-li ${active}`}>
-                    <Link to={to} className="link" >
+                <li className = {active}>
+                    <Link to = {to} className = "link" >
                         {label}
                     </Link>
                 </li>
@@ -37,17 +37,16 @@ class MenuTop extends Component {
                 }
             });
         }
-
         return result;
-
     }
+
     render() {
         $(document).ready(function () {
             $('#icon').click(function () {
                 $('ul').toggleClass('show');
             });
         });
-
+        
         return (
             <div className = "MenuTop">
                 <nav className = "fixel">
