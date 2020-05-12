@@ -1,9 +1,8 @@
 import React, { Component }  from 'react';
-import $ from 'jquery'
-import MenuAdmin from '../../components/MenuAdmin/MenuAdmin.js';
 
+import './Admin.css'
+import MenuAdmin from '../../components/MenuAdmin/MenuAdmin.js';
 import routeMenuAdminManager from './routeMenuAdminManager';
-import * as routeAdmin from './routeMenuAdminManager';
 
 import axios from 'axios';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
@@ -22,28 +21,11 @@ class Admin extends Component {
         }
     }
 
-    showContentAdmin = (routeMenuAdminManager) => {
-        var result = null;
-        if (routeMenuAdminManager.length > 0) {
-            result = routeMenuAdminManager.map((route, index) => {
-                return (
-                    <Route 
-                        key = { index } 
-                        path = { route.path } 
-                        exact = { route.exact } 
-                        component = { route.main }  
-                    />
-                );
-            });
-        }
-        return result;
-      }
-
-    async componentWillMount() {
+    async UNSAFE_componentWillMount() {
         let token = localStorage.getItem('token');
         const options = {
             method: 'GET',
-            url: 'http://localhost:8080/user',
+            url: 'http://ec2-54-161-212-167.compute-1.amazonaws.com:8080/profile',
             headers: {
                 authorization: `Bearer ${token}`
             }
@@ -63,45 +45,57 @@ class Admin extends Component {
             })
         
     }
+
+    showContentAdmin = (routeMenuAdminManager) => {
+        var result = null;
+        if (routeMenuAdminManager.length > 0) {
+            result = routeMenuAdminManager.map((route, index) => {
+                return (
+                    <Route 
+                        key = { index } 
+                        path = { route.path } 
+                        exact = { route.exact } 
+                        component = { route.main }  
+                    />
+                );
+                
+            });
+        }
+        return result;
+    }
     
     render() {
-        if(routeAdmin.admin === null && localStorage.token !== 'undefined' ){
-            window.location.reload()
-        }
+        let {match} = this.props
         if(localStorage.token === null || localStorage.token === 'undefined' || !localStorage.token ){
             return <Redirect to = '/login'/>
         }
-        
-        return(
+        if(match.params.name !== localStorage.admin ){
+            return <Redirect to ={ `/admin/${localStorage.admin}/error` } />
+        }
+        return(  
             <Router>
-            <div className = "Admin"> 
-                <div>   
-                    <MenuAdmin admin = {this.state.name} />  
-                    <div style = {{ marginLeft: '72px' , marginTop: '72px' , marginRight : '8px' }} >
-                        <div>
-                            <Switch>
-                                { this.showContentAdmin(routeMenuAdminManager) }
-                            </Switch>
-                        </div> 
-                    </div>
-                </div> 
-            </div>
-           </Router>
+                <div className = "Admin"> 
+                    <MenuAdmin url = {this.state.name}/>
+                    <div className ='adminPage' >
+                        <Switch>
+                            { this.showContentAdmin(routeMenuAdminManager) }
+                        </Switch>
+                    </div>   
+                </div>
+            </Router>
         );
     }
 }
 
 const mapStateToProps = (state) => {
     return {
-       dataAdmin : state.dataAdmin
+       
     }
 };
 
 const mapDispatchToProps = (dispatch , props) => {
     return {
-        onAddAdmin : (admin) => {
-            dispatch(actions.addAdmin(admin));
-        }
+        
     }
 }
 

@@ -1,5 +1,7 @@
-import React, { Component } from 'react';
-import Default from './Default.js';
+import React from 'react';
+import Default from './Default/Default';
+import ClassList from './ClassList/ClassList'
+import ErrorPage from './ErrorPage/ErrorPage'
 
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import GroupIcon from '@material-ui/icons/Group';
@@ -13,37 +15,47 @@ const routeMenuAdminManager = [
     {
       primary : 'Default' ,
       icon : <AccountBalanceIcon/>,
-      path : `/admin/${admin}`,
-      exact : false,
+      path : '/admin/:name',
+      link : '',
+      exact : true,
       main: ({ match, location }) => <Default match = {match} location = {location}/>
     },
     {
       primary : 'Course' ,
       icon :  <BookmarksIcon/> ,
-      path : `/admin/${admin}/course`,
-      exact : false,
+      path : `/admin/:name/course`,
+      link : `/course`,
+      exact : true,
       main: () => <Default />
     },
     { 
       primary: 'Class List',
       icon : <ClassIcon/> ,
-      path : `/admin/${admin}/classLiss`,
-      exact : false,
-      main: () => <Default />
+      path : `/admin/:name/classlist`,
+      link : '/classlist',
+      exact : true,
+      main: ({ match, location }) => <ClassList match = {match} location = {location}/>
     },
     {
       primary : 'Teacher List',
       icon :  <ListAltRoundedIcon/>,
-      path : `/admin/${admin}/teachersLish`,
-      exact : false,
+      path : `/admin/:name/teacherslist`,
+      link : '/teacherslist',
+      exact : true,
       main: () => <Default />
     },
     {
       primary : 'Students',
       icon : <GroupIcon/>,
-      path : `/admin/${admin}/students`,
-      exact : false,
+      path : `/admin/:name/students`,
+      link : '/students',
+      exact : true,
       main: () => <Default />
+    },
+    {
+      path : `/admin/:name/:error`,
+      exact : false,
+      main: ({match}) => <ErrorPage match ={match} />
     },
 ]
 
