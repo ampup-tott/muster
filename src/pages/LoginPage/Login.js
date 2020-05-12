@@ -45,7 +45,7 @@ class Login extends Component {
         var username = this.state.idAdmin;
         var password = this.state.passAdmin;
         let user_info;
-        const url = 'http://localhost:8080';
+        const url = 'http://ec2-54-161-212-167.compute-1.amazonaws.com:8080';
         let checkEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if(checkEmail.test(username) && password.length) {
             await axios.post(`${url}/login`, { username, password } ,{headers: { 'Content-Type': 'application/json' }})
@@ -174,20 +174,6 @@ class Login extends Component {
 
 }
 
-const mapStateToProps = (state) => {
-    return {
-        admin : state.dataAdmin
-    }
-}
-
-const mapDispatchToProps = (dispatch , props) => {
-    return {
-        onAddAdmin : (admin) => {
-            dispatch(actions.addAdmin(admin));
-        }
-    }
-}
-
 function ClickAdmin() {
     var x = document.getElementById("user")
     var y = document.getElementById("admin")
@@ -210,4 +196,4 @@ function ClickUser() {
 
 
 
-export default connect(mapStateToProps , mapDispatchToProps)(Login);
+export default Login;
