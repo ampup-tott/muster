@@ -17,8 +17,9 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import TableBody from '@material-ui/core/TableBody';
 
-
-
+import CanvasJSReact from '../../../assets/react-canvasjs-chart-samples/canvasjs.react';
+var CanvasJS = CanvasJSReact.CanvasJS;
+var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 class Default extends Component {
     constructor(props) {
         super(props);
@@ -37,7 +38,7 @@ class Default extends Component {
                 subjects: 'IOT',
                 teacher: 'Gia Bao',
                 attendance: false,
-                date: '2020-4-24'
+                date: '2020-5-21'
             },
             {
                 id: 124,
@@ -46,43 +47,97 @@ class Default extends Component {
                 subjects: 'CCNA',
                 teacher: 'TAN DUNG',
                 attendance: false,
-                date: '2020-4-24'
+                date: '2020-5-21'
             },
         ]
     }
 
     showTableDefault = (data) => {
         var result = null
-        if (data.length > 0 ) {
+        if (data.length > 0) {
             result = data.map((data, index) => {
-                if(data.date === this.state.date){
-                return (
-                    <TableRow key={data.id}>
-                        <TableCell component="th" scope="row">
-                            {data.class}
-                        </TableCell>
-                        <TableCell align="right">{data.NoS}</TableCell>
-                        <TableCell align="right">{data.subjects}</TableCell>
-                        <TableCell align="right">{data.teacher}</TableCell>
-                        <TableCell align="right"></TableCell>
-                    </TableRow>
-                );
+                if (data.date === this.state.date) {
+                    return (
+                        <TableRow key={data.id}>
+                            <TableCell component="th" scope="row">
+                                {data.class}
+                            </TableCell>
+                            <TableCell align="right">{data.NoS}</TableCell>
+                            <TableCell align="right">{data.subjects}</TableCell>
+                            <TableCell align="right">{data.teacher}</TableCell>
+                            <TableCell align="right"></TableCell>
+                        </TableRow>
+                    );
                 }
             });
         }
         return result;
     }
 
-
     render() {
+        const optionsIT = {
+            animationEnabled: true,
+            title: {
+                text: "INFORMATION TECHNOLOGY"
+            },
+            data: [{
+                type: "pie",
+                startAngle: 70,
+                toolTipContent: "<b>{label}</b>: {y}%",
+                legendText: "{label}",
+                indexLabelFontSize: 15,
+                indexLabel: "{label} - {y}%",
+                dataPoints: [
+                    { y: 28, label: "Graphic Design" },
+                    { y: 39, label: "Website Programming" },
+                    { y: 19, label: "Mobile Programming" },
+                    { y: 5, label: "Computer Science" },
+                    { y: 10, label: "Artifical Intelligence" }
+                ]
+            }]
+        }
+
+        const optionsBAF = {
+            animationEnabled: true,
+            title: {
+                text: "BANKING AND FINANCE",
+            },
+            data: [{
+                type: "pie",
+                startAngle: 61,
+                toolTipContent: "<b>{label}</b>: {y}%",
+                legendText: "{label}",
+                indexLabelFontSize: 16,
+                indexLabel: "{label} - {y}%",
+                dataPoints: [
+                    { y: 15, label: "Public Finance Management" },
+                    { y: 49, label: "Accountant" },
+                    { y: 12, label: "Business Management" },
+                    { y: 9, label: "Tax Industry" },
+                    { y: 15, label: "Business Finance" }
+                ]
+            }]
+        }
+        
         return (
             <div className='DefaultAdmin'>
                 <Grid container spacing={1} style={{ backgroundColor: 'white', boxShadow: '0.1em 0.1em 0.2em 0.1em' }} >
                     <Grid item xs={12}>
                         <h5 style={{ color: '#34495e' }}> Default </h5>
                     </Grid>
+                        <Grid item lg={6} md={6} sm={12} xs={12}>
+                            <Card>
+                                <CanvasJSChart options={optionsIT}/>
+                            </Card>
+                        </Grid>
+                        <Grid item lg={6} md={6} sm={12} xs={12}>
+                            <Card>
+                                <CanvasJSChart options={optionsBAF}/>
+                            </Card>
+                        </Grid>
+
                     <Grid item lg={3} md={3} sm={6} xs={12} >
-                        <Card className='card DM bg-danger text-light' >
+                        <Card className='card DM bg-danger text-light ' >
                             <CardContent>
                                 <Typography className='text-center' gutterBottom variant="h5" >
                                     Department
