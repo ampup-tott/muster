@@ -30,7 +30,7 @@ import Typography from '@material-ui/core/Typography';
 
 import Spinner from 'react-bootstrap/Spinner'
 
-
+import imgAdmin  from '../../assets/avtAdmin.jpg'
 
 
 const drawerWidth = 240;
@@ -115,6 +115,9 @@ export default function MenuTopAdmin(props) {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+  const closeDrawer = () => {
+    setOpen(false)
+  }
   const handleMenu = event => {
     setAnchorEl(event.currentTarget);
   };
@@ -136,7 +139,7 @@ export default function MenuTopAdmin(props) {
       result = routeMenuAdmin.map((route, index) => {
         if(route.primary != null){
           return (
-            <Link key={index} to={`/admin/${url}${route.link}`} style={{ textDecoration: 'none', color: 'black' }}>
+            <Link onClick={closeDrawer} key={index} to={`/admin/${url}${route.link}`} style={{ textDecoration: 'none', color: 'black' }}>
               <ListItem button >
                 <ListItemIcon style={{ color: '#34495e' }}>{route.icon}</ListItemIcon>
                 <ListItemText primary = {route.primary} />
@@ -169,7 +172,7 @@ export default function MenuTopAdmin(props) {
           <Typography variant = "h6" className = {classes.title}>
             <b className = 'text-light'> PRESENCE </b>
           </Typography>
-          <Avatar alt = "Admin" src = "#" />
+          <Avatar alt = "Admin" src={imgAdmin} />
           <div id = "infoAdmin" className = "ml-3 mr-2" >
             <b className = 'text-light mr-1'> Admin: </b>
             <i>{nameAdmin}</i>
@@ -229,7 +232,7 @@ export default function MenuTopAdmin(props) {
         <div className = {classes.toolbar}>
           <div className = "row">
             <div className = 'col-3'>
-              <Avatar alt = 'Admin' src="#" className = {classes.AvatarLeft} />
+              <Avatar alt ='Admin' src={imgAdmin} className = {classes.AvatarLeft} />
             </div>
             <div style = {{ position: 'absolute' }} className = 'col ml-5 mt-2'>
               <b className = 'ml-4 mr-1'> Admin: </b>
