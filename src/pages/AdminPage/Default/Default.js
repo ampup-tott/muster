@@ -30,7 +30,8 @@ class Default extends Component {
 
             NOsubjects : 0,
             NOstudents : 0,
-            NOteachers : 0
+            NOteachers : 0,
+            NOclasses : 0
         }
 
         this.data = [
@@ -78,8 +79,8 @@ class Default extends Component {
     }
 
     render() {
-        let { subjects, students, teachers } = this.props
-        let { NOsubjects, NOstudents, NOteachers } = this.state
+        let { subjects, students, teachers, classes } = this.props
+        let { NOsubjects, NOstudents, NOteachers, NOclasses } = this.state
         if(subjects){
             for( let i in subjects){
                 if(subjects.hasOwnProperty(i)){
@@ -98,6 +99,13 @@ class Default extends Component {
             for( let i in teachers){
                 if(teachers.hasOwnProperty(i)){
                     NOteachers++
+                }
+            }  
+        }
+        if(classes){
+            for( let i in classes){
+                if(classes.hasOwnProperty(i)){
+                    NOclasses++
                 }
             }  
         }
@@ -193,7 +201,7 @@ class Default extends Component {
                         >
                             <Card className='cardSubject'>
                                 <Fab className='ml-1' style={{ outline: '0' }} color="secondary">
-                                    <b>0</b>
+                                    <b>{NOclasses}</b>
                                 </Fab>
                             </Card>
                             <div className="col-12 mb-4" style={{ height: '30px' }}>
@@ -281,6 +289,7 @@ const mapStateToProps = (state) => {
         subjects: state.dataSubjects.dataSubjects.data,
         teachers: state.dataTeachers.dataTeachers.data,
         students: state.dataStudents.dataStudents.data,
+        classes: state.dataClasses.dataClasses.data,
     }
 }
 

@@ -77,7 +77,7 @@ class List extends Component {
                         <TableHead>
                             <TableRow className='titleTable' style={{ backgroundColor: '#388e3c' }}>
                                 <TableCell style={{ minWidth: 170 }} className='TableCell' >CLASS</TableCell>
-                                <TableCell style={{ minWidth: 170 }} className='TableCell' align="left">NUMBER OF STUDENT</TableCell>
+                                <TableCell style={{ minWidth: 170 }} className='TableCell' align="center">NUMBER OF STUDENT</TableCell>
                                 <TableCell style={{ minWidth: 170 }} className='TableCell' align="left">MAJOR</TableCell>
                                 <TableCell style={{ minWidth: 170 }} className='TableCell' align="left">TEACHER</TableCell>
                                 <TableCell style={{ minWidth: 170 }} className='TableCell' align="left">SUBJECT</TableCell>
