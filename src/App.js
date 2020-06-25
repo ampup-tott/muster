@@ -6,10 +6,14 @@ import routes from './routes';
 import { Switch } from 'react-router-dom';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
+// import {Provider} from 'react-redux';
+// import {configureStore} from './redux/redux-thunk/configureStore/configureStore' 
+// const store = configureStore()
+
 class App extends Component {
   
   render() {
-    return (
+    return (     
       <Router>
         <div className = "App">
           <div id = "bodyPage">
