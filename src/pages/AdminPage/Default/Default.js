@@ -16,7 +16,7 @@ import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 
 import { connect } from 'react-redux';
 
-import CanvasJSReact from '../../../assets/react-canvasjs-chart-samples/canvasjs.react';
+import CanvasJSReact from '../../../assets/canvasjs.react';
 var CanvasJS = CanvasJSReact.CanvasJS;
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 class Default extends Component {
