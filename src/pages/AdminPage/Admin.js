@@ -10,22 +10,29 @@ import { Redirect } from 'react-router-dom'
 import { Switch } from 'react-router-dom'
 
 import { connect } from 'react-redux';
-import * as actions from './../../redux/actions/index' 
+import * as actions from './../../redux/actions/index';
+import { bindActionCreators } from 'redux';
+import * as adminActions from '../../redux/actions/getProfileAdmin';
+import * as subjectActions from '../../redux/actions/getSubjects';  
+import * as studentActions from '../../redux/actions/getStudents';
+import * as teacherActions from '../../redux/actions/getTeachers'; 
+import * as classActions from '../../redux/actions/getClasses';    
 
 
 class Admin extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data : {},
+            
         }
     }
 
-    async UNSAFE_componentWillMount() {
+    async UNSAFE_componentWillMount() {  
+        const url = 'https://main.musterapis.xyz';
         let token = localStorage.getItem('token');
         const options = {
             method: 'GET',
-            url: 'http://ec2-54-161-212-167.compute-1.amazonaws.com:8080/profile',
+            url: `${url}/profile`,
             headers: {
                 authorization: `Bearer ${token}`
             }
@@ -44,6 +51,18 @@ class Admin extends Component {
                 console.log(error.message);
             })
         
+
+        const { actionAdmin, actionSubject, actionStudent, actionTeacher, actionClass } = this.props;
+        const { fetchProfileAdminRequest } = actionAdmin;
+        const { fetchSubjectsRequest } = actionSubject;
+        const { fetchStudentsRequest } = actionStudent;
+        const { fetchTeachersRequest } = actionTeacher;
+        const { fetchClassesRequest } = actionClass;
+        fetchProfileAdminRequest()
+        fetchSubjectsRequest()
+        fetchStudentsRequest()
+        fetchTeachersRequest()
+        fetchClassesRequest()
     }
 
     showContentAdmin = (routeMenuAdminManager) => {
@@ -63,9 +82,9 @@ class Admin extends Component {
         }
         return result;
     }
-    
+
     render() {
-        let {match} = this.props
+        let {match } = this.props
         if(localStorage.token === null || localStorage.token === 'undefined' || !localStorage.token ){
             return <Redirect to = '/login'/>
         }
@@ -87,16 +106,14 @@ class Admin extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
+const mapDispatchToProps = (dispatch) => {
     return {
-       
-    }
-};
-
-const mapDispatchToProps = (dispatch , props) => {
-    return {
-        
+        actionAdmin: bindActionCreators(adminActions , dispatch),
+        actionSubject: bindActionCreators(subjectActions , dispatch),
+        actionStudent: bindActionCreators(studentActions , dispatch),
+        actionTeacher: bindActionCreators(teacherActions , dispatch),
+        actionClass: bindActionCreators(classActions , dispatch)
     }
 }
 
-export default connect(mapStateToProps ,mapDispatchToProps)(Admin);
+export default connect(null ,mapDispatchToProps)(Admin);

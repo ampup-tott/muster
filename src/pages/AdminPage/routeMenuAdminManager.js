@@ -1,13 +1,18 @@
 import React from 'react';
 import Default from './Default/Default';
+import Subjects from './Subjects/Subjects';
 import ClassList from './ClassList/ClassList'
-import ErrorPage from './ErrorPage/ErrorPage'
+import Students from './Students/Students';
+import ErrorPage from './ErrorPage/ErrorPage';
+import TeacherList from './TeacherList/TeacherList'
 
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import GroupIcon from '@material-ui/icons/Group';
 import ListAltRoundedIcon from '@material-ui/icons/ListAltRounded';
 import ClassIcon from '@material-ui/icons/Class';
-import BookmarksIcon from '@material-ui/icons/Bookmarks';
+// import BookmarksIcon from '@material-ui/icons/Bookmarks';
+import SubjectIcon from '@material-ui/icons/Subject';
+
 
 export const admin = localStorage.getItem('admin')
 
@@ -20,13 +25,21 @@ const routeMenuAdminManager = [
       exact : true,
       main: ({ match, location }) => <Default match = {match} location = {location}/>
     },
-    {
-      primary : 'Course' ,
-      icon :  <BookmarksIcon/> ,
-      path : `/admin/:name/course`,
-      link : `/course`,
+    // {
+    //   primary : 'Course' ,
+    //   icon :  <BookmarksIcon/> ,
+    //   path : `/admin/:name/course`,
+    //   link : `/course`,
+    //   exact : true,
+    //   main: () => <Default />
+    // },
+    { 
+      primary: 'Subject List',
+      icon : <SubjectIcon/> ,
+      path : `/admin/:name/subjects`,
+      link : '/subjects',
       exact : true,
-      main: () => <Default />
+      main: ({ match, location }) => <Subjects match = {match} location = {location}/>
     },
     { 
       primary: 'Class List',
@@ -39,10 +52,10 @@ const routeMenuAdminManager = [
     {
       primary : 'Teacher List',
       icon :  <ListAltRoundedIcon/>,
-      path : `/admin/:name/teacherslist`,
-      link : '/teacherslist',
+      path : `/admin/:name/teacherlist`,
+      link : '/teacherlist',
       exact : true,
-      main: () => <Default />
+      main: ({ match, location }) => <TeacherList match = {match} location = {location} />
     },
     {
       primary : 'Students',
@@ -50,7 +63,7 @@ const routeMenuAdminManager = [
       path : `/admin/:name/students`,
       link : '/students',
       exact : true,
-      main: () => <Default />
+      main: ({ match, location }) => <Students match = {match} location = {location} />
     },
     {
       path : `/admin/:name/:error`,
