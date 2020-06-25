@@ -37,7 +37,13 @@ class StudentsList extends Component {
 
         if (students) {
             result = students.map((students, index) => {             
-                return keyFilter == students.first_name || keyFilter == students.last_name || keyFilter == students.id || keyFilter == students.major || keyFilter == 'All Department' || keyFilter == '' ? (
+                return keyFilter == students.first_name 
+                                    || keyFilter == students.last_name 
+                                    || keyFilter == students.id 
+                                    || keyFilter == students.major 
+                                    || keyFilter == 'All Department' 
+                                    || keyFilter == '' ? 
+                (
                     <TableRow onClick={() => this.showDetail(students.id)} className="btn btn-light" hover key={index}>
                         <TableCell style={{ minWidth: 170 }} className='TableCell'>{students.id}</TableCell>
                         <TableCell style={{ minWidth: 170 }} className='TableCell' align="left">{students.first_name}</TableCell>

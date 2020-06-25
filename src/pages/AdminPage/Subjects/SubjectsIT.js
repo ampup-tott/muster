@@ -17,8 +17,8 @@ import Paper from '@material-ui/core/Paper';
 
 import ImportantDevicesIcon from '@material-ui/icons/ImportantDevices';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-import IconButton from '@material-ui/core/IconButton';
 import AddIcon from '@material-ui/icons/Add';
+import IconButton from '@material-ui/core/IconButton';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
 import { connect } from 'react-redux';
@@ -75,11 +75,7 @@ class SubjectsIT extends Component {
                                     <b>{subject.id}</b>
                                 </Fab>
                             </Card>
-                            <Tooltip  title="Delete subject" >
-                                <IconButton onClick={() => this.handleDelete(subject._id)} className='btnDelete' style={{ outline: '0'}} size='small' aria-label="delete">
-                                    <HighlightOffIcon color="secondary" />
-                                </IconButton>
-                            </Tooltip>
+                            
                             <div className="col-12 mb-2" style={{height : '50px'}}>
                                 <p className='mt-2'><b>{subject.name}</b></p>
                             </div>            

@@ -75,11 +75,7 @@ class SubjectsBAK extends Component {
                                     <b>{subject.id}</b>
                                 </Fab>
                             </Card>
-                            <Tooltip title="Delete subject" >
-                                <IconButton className='btnDelete' onClick={() => this.handleDelete(subject._id)} style={{ outline: '0' }} size='small' aria-label="delete">
-                                    <HighlightOffIcon color="secondary" />
-                                </IconButton>
-                            </Tooltip>
+                            
                             <div className="col-12 mb-2" style={{ height: '50px' }}>
                                 <p className='mt-2'><b>{subject.name}</b></p>
                             </div>

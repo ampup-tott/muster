@@ -181,7 +181,7 @@ export default function MenuTopAdmin(props) {
           <Typography variant="h6" className={classes.title}>
             <b className='text-light'> PRESENCE </b>
           </Typography>
-          <Avatar alt="Admin" src={imgAdmin} />
+          <Avatar alt="Admin" />
           <div id="infoAdmin" className="ml-3 mr-2" >
             <b className='text-light mr-1'> Admin: </b>
             <i>{nameAdmin}</i>
@@ -241,7 +241,7 @@ export default function MenuTopAdmin(props) {
         <div className={classes.toolbar}>
           <div className="row">
             <div className='col-3'>
-              <Avatar alt='Admin' src={imgAdmin} className={classes.AvatarLeft} />
+              <Avatar alt='Admin' className={classes.AvatarLeft} />
             </div>
             <div style={{ position: 'absolute' }} className='col ml-5 mt-2'>
               <b className='ml-4 mr-1'> Admin: </b>

@@ -10,7 +10,10 @@ class ControlList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            title : 'All Department'
+            title : 'All Department',
+            titleClass : 'All Class',
+            
+            classList : []
         }
     }
 
@@ -20,9 +23,26 @@ class ControlList extends Component {
         })
     };
 
-    handleSelectDropDown = (id) => {
+    handleSelectDropDownAll = (id) => {
         this.setState({
-            title : id
+            titleClass : 'All Class',
+            title : 'All Department'
+        })
+        this.props.onKeyFilter(id)
+    }
+
+    handleSelectDropDownDe = (id , ids) => {
+        this.setState({
+            title : id,
+            titleClass : 'All Classes',
+        })
+        this.props.onKeyFilter(ids)
+    }
+
+    handleSelectDropDownClass = (id) => {
+        this.setState({
+            title : 'All Department',
+            titleClass : id
         })
         this.props.onKeyFilter(id)
     }
@@ -34,10 +54,17 @@ class ControlList extends Component {
     }
 
     render() {
+        let { classes } = this.props
+        let { classList } = this.state
+        
+        if(classes) {
+            classList = classes
+        }
+
         return (
             <div className = 'ControlList'>
                 <Nav className="row" justify defaultActiveKey="ALL" style={{outline : '0'}}>
-                    <Nav.Item className="col-xl-12 col-sm-12" onClick={() => this.handleSelectDropDown('All Department')}>
+                    <Nav.Item className="col-xl-12 col-sm-12" onClick={() => this.handleSelectDropDownAll('All Department')}>
                         <Nav.Link eventKey="ALL">
                             <b>All Classes</b>
                         </Nav.Link>
@@ -47,19 +74,19 @@ class ControlList extends Component {
                         <NavDropdown title={this.state.title} id="nav-dropdown">
                         <NavDropdown.Item 
                                 eventKey="ALL" 
-                                onClick={() => this.handleSelectDropDown('All Department')}
+                                onClick={() => this.handleSelectDropDownDe('All Department', '')}
                             >
                                 All Department
                             </NavDropdown.Item>
                             <NavDropdown.Item 
                                 eventKey="IT" 
-                                onClick={() => this.handleSelectDropDown('Information Technology')}
+                                onClick={() => this.handleSelectDropDownDe('Information Technology', 'IT')}
                             >
                                 Information Technology
                             </NavDropdown.Item>
                             <NavDropdown.Item 
                                 eventKey="BAF"
-                                onClick={() => this.handleSelectDropDown('Banking and Finance')}
+                                onClick={() => this.handleSelectDropDownDe('Banking and Finance' , "BAF")}
                             >
                                 Banking and Finance
                             </NavDropdown.Item>
@@ -68,10 +95,16 @@ class ControlList extends Component {
                     </Nav.Item>
                     <Nav.Item className="col-xl-12 col-sm-12 ">
                         <b>
-                        <NavDropdown title='Classes' id="nav-dropdown">
-                            <NavDropdown.Item >
-
-                            </NavDropdown.Item>
+                        <NavDropdown title={this.state.titleClass} id="nav-dropdown">
+                            {classList.map((classes, index) => (
+                                <NavDropdown.Item 
+                                    key = {classes.name}
+                                    eventKey = "NAME"
+                                    onClick = {() => this.handleSelectDropDownClass(classes.name)}
+                                >
+                                    {classes.name}
+                                </NavDropdown.Item>
+                            ))}
                         </NavDropdown>
                         </b>
                     </Nav.Item>
@@ -92,4 +125,10 @@ const mapDispatchToProps = (dispatch , props) => {
     }
 }
 
-export default connect(null, mapDispatchToProps)(ControlList);
+const mapStateToProps = (state) => {
+    return {
+        classes : state.dataClasses.dataClasses.data
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ControlList);

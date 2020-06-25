@@ -10,7 +10,9 @@ class TabsStudent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            title : 'All Department'
+            title : 'All Department',
+            titleClass : 'All Class',
+            classesList : []
         }
     }
 
@@ -22,7 +24,26 @@ class TabsStudent extends Component {
 
     handleSelectDropDown = (id) => {
         this.setState({
-            title : id
+            title : 'All Department',
+            titleClass : 'All Classes',
+        })
+
+        this.props.onKeyFilter(id)
+    }
+
+    handleSelectDropDownDe = (id) => {
+        this.setState({
+            title : id,
+            titleClass : 'All Classes'
+        })
+
+        this.props.onKeyFilter(id)
+    }
+
+    handleSelectDropDownClass = (id, ids) => {
+        this.setState({
+            title : 'All Department',
+            titleClass : id
         })
 
         this.props.onKeyFilter(id)
@@ -35,7 +56,13 @@ class TabsStudent extends Component {
     }
 
     render() {
-        let { match } = this.props
+        let { classes } = this.props
+        let { classesList } = this.state
+
+        if(classes){
+            classesList = classes
+        }
+
         return (
             <div className='TabsStudent'>
                 <Nav className="row" justify defaultActiveKey="ALL" style={{outline : '0'}}>
@@ -49,19 +76,19 @@ class TabsStudent extends Component {
                         <NavDropdown title={this.state.title} id="nav-dropdown">
                         <NavDropdown.Item 
                                 eventKey="ALL" 
-                                onClick={() => this.handleSelectDropDown('All Department')}
+                                onClick={() => this.handleSelectDropDownDe('All Department')}
                             >
                                 All Department
                             </NavDropdown.Item>
                             <NavDropdown.Item 
                                 eventKey="IT" 
-                                onClick={() => this.handleSelectDropDown('Information Technology')}
+                                onClick={() => this.handleSelectDropDownDe('Information Technology')}
                             >
                                 Information Technology
                             </NavDropdown.Item>
                             <NavDropdown.Item 
                                 eventKey="BAF"
-                                onClick={() => this.handleSelectDropDown('Banking and Finance')}
+                                onClick={() => this.handleSelectDropDownDe('Banking and Finance')}
                             >
                                 Banking and Finance
                             </NavDropdown.Item>
@@ -70,10 +97,16 @@ class TabsStudent extends Component {
                     </Nav.Item>
                     <Nav.Item className="col-xl-12 col-sm-12 ">
                         <b>
-                        <NavDropdown title='Classes' id="nav-dropdown">
-                            <NavDropdown.Item >
-
-                            </NavDropdown.Item>
+                        <NavDropdown title={this.state.titleClass} id="nav-dropdown">
+                            {classesList.map((classes, index) => (
+                                <NavDropdown.Item 
+                                    key = {classes.name}
+                                    eventKey = "NAME"
+                                    onClick = {() => this.handleSelectDropDownClass(classes.name)}
+                                >
+                                    {classes.name}
+                                </NavDropdown.Item>
+                            ))}
                         </NavDropdown>
                         </b>
                     </Nav.Item>
@@ -90,4 +123,10 @@ const mapDisPatchToProps = (dispatch, props) => {
     }
 }
 
-export default connect(null, mapDisPatchToProps)(TabsStudent);
+const mapStateToProps = (state) => {
+    return {
+        classes : state.dataClasses.dataClasses.data
+    }
+}
+
+export default connect(mapStateToProps, mapDisPatchToProps)(TabsStudent);

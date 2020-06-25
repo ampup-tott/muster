@@ -39,7 +39,7 @@ class List extends Component {
 
                 return keyFilter == classes.name 
                                     || keyFilter == classes.id 
-                                    || keyFilter == classes.major 
+                                    || keyFilter == classes.mask 
                                     || keyFilter == classes.teacher_name
                                     || keyFilter == classes.subject_name  
                                     || keyFilter == 'All Department' 

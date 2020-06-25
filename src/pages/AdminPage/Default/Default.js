@@ -253,7 +253,7 @@ class Default extends Component {
                     </Grid>
                 </Grid>
                 <Grid container spacing={1} style={{ backgroundColor: 'white', boxShadow: '0.1em 0.1em 0.2em 0.1em', marginTop: '10px' }} >
-                    <Grid item lg={12} md={12} sm={12} xs={12}>
+                    {/* <Grid item lg={12} md={12} sm={12} xs={12}>
                         <h4 style={{ color: '#34495e' }} className='text-center mt-2'>
                             <b>ATTENDANCE CLASSES TODAY ({this.state.date})</b>
                         </h4>
@@ -271,13 +271,13 @@ class Default extends Component {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody >
-                                    {/* {rows.map((row) => ( */}
+                                   
                                     {this.showTableDefault(this.data)}
-                                    {/* ))} */}
+                                    
                                 </TableBody>
                             </Table>
                         </TableContainer>
-                    </Grid>
+                    </Grid> */}
                 </Grid>
             </div>
         )
