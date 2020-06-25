@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux'
 
 import './MenuAdmin.css'
 import routeMenuAdminManager from '../../pages/AdminPage/routeMenuAdminManager'
@@ -23,14 +24,16 @@ import ListItemText from '@material-ui/core/ListItemText';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import Spinner from 'react-bootstrap/Spinner'
 
-import imgAdmin  from '../../assets/avtAdmin.jpg'
+import imgAdmin from '../../assets/avtAdmin.jpg'
 
 
 const drawerWidth = 240;
@@ -108,7 +111,7 @@ export default function MenuTopAdmin(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const openInforAccount = Boolean(anchorEl);
   const [openMenuleft, setOpen] = React.useState(false);
-
+  
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -125,24 +128,30 @@ export default function MenuTopAdmin(props) {
     setAnchorEl(null);
   };
   const history = useHistory();
+
   const logOut = () => {
     history.push('/login')
     localStorage.clear();
     window.location.reload();
   }
+  const backHome = () => {
+    window.location.href = "/"
+  }
 
 
-  const {url} = props
+  const { url } = props
   const showMenu = (routeMenuAdmin) => {
     var result = null
     if (routeMenuAdmin.length > 0) {
       result = routeMenuAdmin.map((route, index) => {
-        if(route.primary != null){
+        if (route.primary != null) {
           return (
             <Link onClick={closeDrawer} key={index} to={`/admin/${url}${route.link}`} style={{ textDecoration: 'none', color: 'black' }}>
               <ListItem button >
-                <ListItemIcon style={{ color: '#34495e' }}>{route.icon}</ListItemIcon>
-                <ListItemText primary = {route.primary} />
+                <Tooltip  title={route.primary} >
+                  <ListItemIcon style={{ color: '#34495e' }}>{route.icon}</ListItemIcon>
+                </Tooltip>
+                <ListItemText primary={route.primary} />
               </ListItem>
             </Link>
           );
@@ -156,91 +165,91 @@ export default function MenuTopAdmin(props) {
   const nameAdmin = localStorage.getItem('admin')
 
   return (
-    <div id = 'menuAdmin' className = { classes.root }>
+    <div id='menuAdmin' className={classes.root}>
       <CssBaseline />
-      <AppBar position = "fixed" style = {{ backgroundColor: "#34495e" }}
-        className = {clsx(classes.appBar, {
+      <AppBar position="fixed" style={{ backgroundColor: "#34495e" }}
+        className={clsx(classes.appBar, {
           [classes.appBarShift]: openMenuleft,
         })}>
         <Toolbar>
-          <IconButton onClick = {handleDrawerOpen}
-            style = {{ outline: "0" }} edge = "start"
-            color = "inherit" aria-label = "menu"
-            className = {clsx(classes.menuButton, { [classes.hide]: openMenuleft, })}>
+          <IconButton onClick={handleDrawerOpen}
+            style={{ outline: "0" }} edge="start"
+            color="inherit" aria-label="menu"
+            className={clsx(classes.menuButton, { [classes.hide]: openMenuleft, })}>
             <MenuIcon />
           </IconButton>
-          <Typography variant = "h6" className = {classes.title}>
-            <b className = 'text-light'> PRESENCE </b>
+          <Typography variant="h6" className={classes.title}>
+            <b className='text-light'> PRESENCE </b>
           </Typography>
-          <Avatar alt = "Admin" src={imgAdmin} />
-          <div id = "infoAdmin" className = "ml-3 mr-2" >
-            <b className = 'text-light mr-1'> Admin: </b>
+          <Avatar alt="Admin" src={imgAdmin} />
+          <div id="infoAdmin" className="ml-3 mr-2" >
+            <b className='text-light mr-1'> Admin: </b>
             <i>{nameAdmin}</i>
           </div>
           <div>
-            <IconButton style = {{ outline: "0" }}
-              aria-controls = "menu-appbar"
-              aria-haspopup = "true"
-              onClick = {handleMenu}
-              color = "inherit"
+            <IconButton style={{ outline: "0" }}
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleMenu}
+              color="inherit"
             >
               <ArrowDropDownIcon />
             </IconButton>
             <Menu
-              id = "menu-appbar"
-              anchorEl = {anchorEl}
-              anchorOrigin = {{
+              id="menu-appbar"
+              anchorEl={anchorEl}
+              anchorOrigin={{
                 vertical: 'top',
                 horizontal: 'right',
               }}
               keepMounted
-              transformOrigin = {{
+              transformOrigin={{
                 vertical: 'top',
                 horizontal: 'right',
               }}
-              open = {openInforAccount}
-              onClose = {handleClose}
+              open={openInforAccount}
+              onClose={handleClose}
             >
-              <MenuItem onClick = {handleClose}> Profile </MenuItem>
-              <MenuItem onClick = {handleClose}> My account </MenuItem>
-              <MenuItem onClick = {logOut}> Log out </MenuItem>
+              <MenuItem onClick={handleClose}> Profile </MenuItem>
+              <MenuItem onClick={handleClose}> My account </MenuItem>
+              <MenuItem onClick={logOut}> Log out </MenuItem>
             </Menu>
           </div>
         </Toolbar>
       </AppBar>
       <Drawer
-        variant = "permanent"
-        className = {clsx(classes.drawer, {
+        variant="permanent"
+        className={clsx(classes.drawer, {
           [classes.drawerOpen]: openMenuleft,
           [classes.drawerClose]: !openMenuleft,
         })}
-        classes = {{
+        classes={{
           paper: clsx({
             [classes.drawerOpen]: openMenuleft,
             [classes.drawerClose]: !openMenuleft,
           }),
         }}
       >
-        <div className = {classes.toolbar}>
-          <IconButton onClick = {handleDrawerClose}
+        <div className={classes.toolbar}>
+          <IconButton onClick={handleDrawerClose}
             style={{ outline: '0' }}
-            className = {classes.IconCloseDrawer}>
+            className={classes.IconCloseDrawer}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         </div>
         <Divider />
-        <div className = {classes.toolbar}>
-          <div className = "row">
-            <div className = 'col-3'>
-              <Avatar alt ='Admin' src={imgAdmin} className = {classes.AvatarLeft} />
+        <div className={classes.toolbar}>
+          <div className="row">
+            <div className='col-3'>
+              <Avatar alt='Admin' src={imgAdmin} className={classes.AvatarLeft} />
             </div>
-            <div style = {{ position: 'absolute' }} className = 'col ml-5 mt-2'>
-              <b className = 'ml-4 mr-1'> Admin: </b>
+            <div style={{ position: 'absolute' }} className='col ml-5 mt-2'>
+              <b className='ml-4 mr-1'> Admin: </b>
               <i> {nameAdmin} </i><br></br>
             </div>
-            <div style = {{ position: 'absolute' }} className = 'col offset-3 ml-5 mt-4'>
+            <div style={{ position: 'absolute' }} className='col offset-3 ml-5 mt-4'>
               <i className='ml-4' >
-                <FiberManualRecordIcon style = {{ fontSize: 12, color: '#76ff03' }} />
+                <FiberManualRecordIcon style={{ fontSize: 12, color: '#76ff03' }} />
                 <Spinner className='mt-2' animation="grow" size='sm' style={{ color: '#76ff03', marginLeft: -14 }} />
               </i>
               <i> Online </i>
@@ -248,10 +257,16 @@ export default function MenuTopAdmin(props) {
           </div>
         </div>
         <Divider />
-        <List className = {classes.ListItemMenuLeft}>
+        <List className={classes.ListItemMenuLeft}>
           {showMenu(routeMenuAdminManager)}
         </List>
         <Divider />
+        <Link onClick={backHome} to='/' style={{ textDecoration: 'none', color: 'black' }}>
+          <ListItem button >
+            <ListItemIcon style={{ color: '#34495e' }}><ArrowBackIcon/></ListItemIcon>
+            <ListItemText primary='Back Home' />
+          </ListItem>
+        </Link>
       </Drawer>
     </div>
   );
