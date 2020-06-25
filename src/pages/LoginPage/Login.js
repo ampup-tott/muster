@@ -69,7 +69,6 @@ class Login extends Component {
                 })
                 this.handleShow();
             } else {
-                
                 localStorage.setItem('admin', user_info.name);
                 this.setState({
                     is_loggedin: true,
