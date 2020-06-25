@@ -155,6 +155,7 @@ class TableAddClass extends Component {
         }
         // put data of classes list to server 
         this.props.onCloseModalAddClasses()
+        this.props.onOpenSnackbar()
     }
 
     handleDelete = key => {
@@ -268,6 +269,9 @@ const mapDispatchToProps = (dispatch , props) => {
         onCloseModalAddClasses : () => {
             dispatch(actions.closeModalAddClasses());
         },
+        onOpenSnackbar: () => {
+            dispatch(actions.openSnackbar());
+        }
     }
 }
 export default connect(null , mapDispatchToProps)(TableAddClass);

@@ -30,7 +30,6 @@ class Filter extends Component {
                         label="Filter"
                         variant="outlined"
                         fullWidth
-                        onChange = {this.onChangeBox} 
                         ref='name'
                         value = {this.keyFiler}
                         onChange = {this.onChangeBox}

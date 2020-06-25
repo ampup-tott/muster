@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import SnackbarWarning from '../../../components/ComponentWarning/snackbar';
 
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -12,6 +13,7 @@ import TableBody from '@material-ui/core/TableBody';
 
 import InfoIcon from '@material-ui/icons/Info';
 import DeleteIcon from '@material-ui/icons/Delete';
+import GroupAddSharpIcon from '@material-ui/icons/GroupAddSharp';
 
 import { connect } from 'react-redux';
 
@@ -21,88 +23,82 @@ class List extends Component {
     constructor(props) {
         super(props);
         this.state = {
-           classList : [],
-
+            classList: [],
+            keyFilter: '',
         }
     }
-    
-    addKeyControl = (element) => {
-        let {keyControl} = this.props
-        if( keyControl.substring(0,3) === 'All' ){
-            return element
-        }else { 
-            return (
-                element.department == keyControl || element.specialized == keyControl
-            )
-        }    
+
+    showClasses = (classes) => {
+        var result = null;
+        let { keyFilter } = this.props
+        let keyF = this.state.keyFilter
+        keyF = keyFilter
+
+        if (classes) {
+            result = classes.map((classes, index) => {
+
+                return keyFilter == classes.name 
+                                    || keyFilter == classes.id 
+                                    || keyFilter == classes.major 
+                                    || keyFilter == classes.teacher_name
+                                    || keyFilter == classes.subject_name  
+                                    || keyFilter == 'All Department' 
+                                    || keyFilter == '' ?
+                (
+                    <TableRow hover className="btn btn-light" key={index}>
+                        <TableCell style={{ minWidth: 170 }} className='TableCell' >{classes.name}</TableCell>
+                        <TableCell style={{ minWidth: 170 }} className='TableCell' align="center">
+                            {(classes.student_ids).length}
+                        </TableCell>
+                        <TableCell style={{ minWidth: 170 }} className='TableCell' align="left">
+                            { (classes.mask) == "IT" ? "Information Technology" : "Banking and Finance"}
+                        </TableCell>
+                        <TableCell style={{ minWidth: 170 }} className='TableCell' align="left">{classes.teacher_name}</TableCell>
+                        <TableCell style={{ minWidth: 170 }} className='TableCell' align="left">{classes.subject_name}</TableCell>
+                    </TableRow>
+                ) : null
+            });
+        }
+        return result;
     }
 
     render() {
-        let {classes} = this.props
-        let {keyFilter} = this.props
-        let {classList} = this.state    
-        let classControl = classes.filter(this.addKeyControl)
-
-        if(!keyFilter){
-        classList.splice( 0 , classList.length)
-            for( let  i in classControl){
-                classList.push(classControl[i])
-            }
-        }
+        let { classes } = this.props
+        let { classList, NoN } = this.state
         
-        if( keyFilter){
-            classList.splice( 0 , classList.length) 
-            let k = Array.from(keyFilter)
-            
-            for( let i in classes ){
-                if( ((Array.from(classes[i].className)).slice(0, k.length)).join('') == keyFilter ){
-                    classList.push(classes[i])
-                }else if( ((Array.from(classes[i].department)).slice(0, k.length)).join('') == keyFilter ){
-                    classList.push(classes[i])
-                }else if( ((Array.from(classes[i].specialized)).slice(0, k.length)).join('') == keyFilter ){
-                    classList.push(classes[i])
-                }
-            }
+        if( classes ){
+            classList = classes 
         }
+
         return (
             <Grid item lg={12} md={12} sm={12} xs={12}>
-                <TableContainer component = {Paper}>
+                <TableContainer component={Paper}>
                     <Table className='table' aria-label="customized table">
                         <TableHead>
-                            <TableRow className = 'titleTable' style = {{ backgroundColor: '#607d8b' }}>
-                                <TableCell className='TableCell' >CLASS</TableCell>
-                                <TableCell className='TableCell' align="center">NUMBER OF STUDENT</TableCell>
-                                <TableCell className='TableCell' align="left">DEPARTMENT</TableCell>
-                                <TableCell className='TableCell' align="left">SPECIALIZED</TableCell>
-                                <TableCell className='TableCell' align="center">ACTION</TableCell>
+                            <TableRow className='titleTable' style={{ backgroundColor: '#388e3c' }}>
+                                <TableCell style={{ minWidth: 170 }} className='TableCell' >CLASS</TableCell>
+                                <TableCell style={{ minWidth: 170 }} className='TableCell' align="left">NUMBER OF STUDENT</TableCell>
+                                <TableCell style={{ minWidth: 170 }} className='TableCell' align="left">MAJOR</TableCell>
+                                <TableCell style={{ minWidth: 170 }} className='TableCell' align="left">TEACHER</TableCell>
+                                <TableCell style={{ minWidth: 170 }} className='TableCell' align="left">SUBJECT</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody >
-                            {classList.map((classes , index) => (
-                                <TableRow key = {index}>
-                                    <TableCell className='TableCell' >{classes.className}</TableCell>
-                                    <TableCell className='TableCell' align="center">{classes.NoN}</TableCell>
-                                    <TableCell className='TableCell' align="left">{classes.department}</TableCell>
-                                    <TableCell className='TableCell' align="left">{classes.specialized}</TableCell>
-                                    <TableCell className='TableCell' align="center">                               
-                                        <InfoIcon className = 'text-success mr-1' />
-                                        <DeleteIcon className = 'text-danger' />               
-                                    </TableCell>
-                                </TableRow>
-                            ))}
+                            {this.showClasses(classList)}
                         </TableBody>
                     </Table>
                 </TableContainer>
+                <SnackbarWarning />
             </Grid>
         )
     }
 }
 
-const mapStateToProps = (state) => { 
+const mapStateToProps = (state) => {
     return {
-        classes : state.addClasses,
-        keyControl : state.controlClassList,
-        keyFilter :state.filter
+        classes: state.dataClasses.dataClasses.data,
+        keyControl: state.controlClassList,
+        keyFilter: state.filter
     }
 }
-export default connect(mapStateToProps , null)(List);
+export default connect(mapStateToProps, null)(List);

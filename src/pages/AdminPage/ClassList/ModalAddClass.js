@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import TableAddClass from './TableAddClass';
+import FormAddClass from './FormAddClass';
 import './ClassListCSS/ModalAddClass.css';
 import "antd/dist/antd.css"; //warning : affect to all css of admin page and material ui
 
@@ -28,7 +28,7 @@ class ModalAddClass extends Component {
                 onHide = {this.props.onCloseModalAddClasses} 
                 className = 'modal mt-4'
                 scrollable = {true}
-                dialogClassName = 'modal-dialog'
+                dialogClassName = 'modalClass modal-dialog'
             >
                 <Modal.Header className = "text-light " style = {{ backgroundColor: "white" }} closeButton>
                     <Modal.Title className = "mt-2" style = {{ color : '#34495e'}}>
@@ -37,7 +37,7 @@ class ModalAddClass extends Component {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <TableAddClass />
+                    <FormAddClass/>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button color = "primary" onClick = {this.props.onCloseModalAddClasses}>
