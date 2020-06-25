@@ -1,28 +1,28 @@
-import * as profileConstants from './../constants/actionFetch';
+import * as classConstants from './../constants/actionFetch';
 
 const initialState = {
-    dataAdmin : [],
+    dataClasses : [],
 };
 
 const Reducer =( state = initialState , action) => {
     switch(action.type){
-        case profileConstants.FETCH_PROFILE_ADMIN: {
+        case classConstants.FETCH_CLASSES: {
             return {
                 ...state,
-                dataAdmin: [],
+                dataClasses: [],
             }
         }
-        case profileConstants.FETCH_PROFILE_ADMIN_SUCCESS: {
+        case classConstants.FETCH_CLASSES_SUCCESS: {
             const { data } = action.payload;
             return {
                 ...state,
-                dataAdmin: data,
+                dataClasses: data,
             }
         }
-        case profileConstants.FETCH_PROFILE_ADMIN_FAILED: {
+        case classConstants.FETCH_CLASSES_FAILED: {
             return {
                 ...state,
-                dataAdmin: [],
+                dataClasses: [],
             }
         } 
         default: 
