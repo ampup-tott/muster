@@ -6,10 +6,10 @@ import 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import * as serviceWorker from './serviceWorker';
 
-import {createStore} from 'redux';
-import Reducer from './redux/reducers/index';
 import {Provider} from 'react-redux'; 
-const store = createStore(Reducer)
+import configureStore from './redux/configureStore/configureStore' 
+const store = configureStore()
+
 
 ReactDOM.render(
     <Provider store={store}>
