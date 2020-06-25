@@ -5,17 +5,16 @@ import './Default.css'
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import { Button } from '@material-ui/core';
-
+import Fab from '@material-ui/core/Fab';
 import Table from '@material-ui/core/Table';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import TableBody from '@material-ui/core/TableBody';
+import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
+
+import { connect } from 'react-redux';
 
 import CanvasJSReact from '../../../assets/react-canvasjs-chart-samples/canvasjs.react';
 var CanvasJS = CanvasJSReact.CanvasJS;
@@ -27,7 +26,11 @@ class Default extends Component {
             date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
         this.state = {
             date: date,
-            data: {}
+            data: {},
+
+            NOsubjects : 0,
+            NOstudents : 0,
+            NOteachers : 0
         }
 
         this.data = [
@@ -75,6 +78,32 @@ class Default extends Component {
     }
 
     render() {
+        let { subjects, students, teachers } = this.props
+        let { NOsubjects, NOstudents, NOteachers } = this.state
+        if(subjects){
+            for( let i in subjects){
+                if(subjects.hasOwnProperty(i)){
+                    NOsubjects++
+                }
+            }  
+        }
+        if(students){
+            for( let i in students){
+                if(students.hasOwnProperty(i)){
+                    NOstudents++
+                }
+            }  
+        }
+        if(teachers){
+            for( let i in teachers){
+                if(teachers.hasOwnProperty(i)){
+                    NOteachers++
+                }
+            }  
+        }
+
+        
+
         const optionsIT = {
             animationEnabled: true,
             title: {
@@ -118,99 +147,101 @@ class Default extends Component {
                 ]
             }]
         }
-        
+
         return (
             <div className='DefaultAdmin'>
                 <Grid container spacing={1} style={{ backgroundColor: 'white', boxShadow: '0.1em 0.1em 0.2em 0.1em' }} >
                     <Grid item xs={12}>
-                        <h5 style={{ color: '#34495e' }}> Default </h5>
+                        <h5 style={{ color: '#34495e' }}>
+                            <b> Default </b>
+                            <AccountBalanceIcon className="mb-2" />
+                        </h5>
                     </Grid>
-                        <Grid item lg={6} md={6} sm={12} xs={12}>
-                            <Card>
-                                <CanvasJSChart options={optionsIT}/>
+                    <Grid item lg={6} md={6} sm={12} xs={12}>
+                        <Card>
+                            <CanvasJSChart options={optionsIT} />
+                        </Card>
+                    </Grid>
+                    <Grid item lg={6} md={6} sm={12} xs={12}>
+                        <Card>
+                            <CanvasJSChart options={optionsBAF} />
+                        </Card>
+                    </Grid>
+                    <Grid className="mt-3 mb-3" item lg={3} md={3} sm={6} xs={12}>
+                        <Paper
+                            className='subject'
+                            elevation={4}
+                        >
+                            <Card className='cardSubject'>
+                                <Fab className='ml-1' style={{ outline: '0' }} color="primary">
+                                    <b>{ NOsubjects }</b>
+                                </Fab>
                             </Card>
-                        </Grid>
-                        <Grid item lg={6} md={6} sm={12} xs={12}>
-                            <Card>
-                                <CanvasJSChart options={optionsBAF}/>
+                            <div className="col-12 mb-4" style={{ height: '30px' }}>
+                                <h5 style={{ marginLeft: '35%' }}>
+                                    <b style={{textShadow: '0.05em 0.05em 0.05em #34495e', color:'#34495e'}}>
+                                        SUBJECTS
+                                    </b>
+                                </h5>
+                            </div>
+                        </Paper>
+                    </Grid>
+                    <Grid className="mt-3 mb-3" item lg={3} md={3} sm={6} xs={12} >
+                        <Paper
+                            className='subject'
+                            elevation={4}
+                        >
+                            <Card className='cardSubject'>
+                                <Fab className='ml-1' style={{ outline: '0' }} color="secondary">
+                                    <b>0</b>
+                                </Fab>
                             </Card>
-                        </Grid>
-
-                    <Grid item lg={3} md={3} sm={6} xs={12} >
-                        <Card className='card DM bg-danger text-light ' >
-                            <CardContent>
-                                <Typography className='text-center' gutterBottom variant="h5" >
-                                    Department
-                                </Typography>
-                            </CardContent>
-                            <CardContent>
-                                <Typography className='text-center' gutterBottom variant="h1" >
-                                    0
-                                </Typography>
-                            </CardContent>
-                            <CardActions >
-                                <Button className='bg-light text-danger' style={{ outline: 'none' }} size="small" >
-                                    <b>See Details</b>
-                                </Button>
-                            </CardActions>
-                        </Card>
+                            <div className="col-12 mb-4" style={{ height: '30px' }}>
+                                <h5 style={{ marginLeft: '35%' }}>
+                                    <b style={{textShadow: '0.05em 0.05em 0.05em #34495e', color:'#34495e'}}>
+                                        CLASSES
+                                    </b>
+                                </h5>
+                            </div>
+                        </Paper>
                     </Grid>
-                    <Grid item lg={3} md={3} sm={6} xs={12}>
-                        <Card className='card SL bg-primary text-light'>
-                            <CardContent>
-                                <Typography className='text-center' gutterBottom variant="h5" >
-                                    Specialized
-                                </Typography>
-                            </CardContent>
-                            <CardContent>
-                                <Typography className='text-center' gutterBottom variant="h1" >
-                                    0
-                                </Typography>
-                            </CardContent>
-                            <CardActions >
-                                <Button className='bg-light text-primary' style={{ outline: 'none' }} size="small" >
-                                    <b> See Details </b>
-                                </Button>
-                            </CardActions>
-                        </Card>
+                    <Grid className="mt-3 mb-3" item lg={3} md={3} sm={6} xs={12}>
+                        <Paper
+                            className='subject'
+                            elevation={4}
+                        >
+                            <Card className='cardSubject'>
+                                <Fab className='ml-1' style={{ outline: '0', backgroundColor : '#00e676' }}>
+                                    <b className='text-light'>{ NOteachers }</b>
+                                </Fab>
+                            </Card>
+                            <div className="col-12 mb-4" style={{ height: '30px' }}>
+                                <h5 style={{ marginLeft: '35%' }}>
+                                    <b style={{textShadow: '0.05em 0.05em 0.05em #34495e', color:'#34495e'}}>
+                                        TEACHERS
+                                    </b>
+                                </h5>
+                            </div>
+                        </Paper>
                     </Grid>
-                    <Grid item lg={3} md={3} sm={6} xs={12}>
-                        <Card className='card CL bg-success text-light'>
-                            <CardContent>
-                                <Typography className='text-center' gutterBottom variant="h5" >
-                                    Class
-                                    </Typography>
-                            </CardContent>
-                            <CardContent>
-                                <Typography className='text-center' gutterBottom variant="h1" >
-                                    0
-                                </Typography>
-                            </CardContent>
-                            <CardActions >
-                                <Button className='bg-light text-success' style={{ outline: 'none' }} size="small" >
-                                    <b> See Details </b>
-                                </Button>
-                            </CardActions>
-                        </Card>
-                    </Grid>
-                    <Grid item lg={3} md={3} sm={6} xs={12}>
-                        <Card className='card TC bg-warning text-light'>
-                            <CardContent>
-                                <Typography className='text-center' gutterBottom variant="h5" >
-                                    Teachers
-                                    </Typography>
-                            </CardContent>
-                            <CardContent>
-                                <Typography className='text-center' gutterBottom variant="h1" >
-                                    0
-                                    </Typography>
-                            </CardContent>
-                            <CardActions >
-                                <Button className='bg-light text-warning' style={{ outline: 'none' }} size="small" >
-                                    <b> See Details </b>
-                                </Button>
-                            </CardActions>
-                        </Card>
+                    <Grid className="mt-3 mb-3" item lg={3} md={3} sm={6} xs={12}>
+                        <Paper
+                            className='subject'
+                            elevation={4}
+                        >
+                            <Card className='cardSubject'>
+                                <Fab className='ml-1' style={{ outline: '0', backgroundColor:'#ffea00' }}>
+                                    <b className='text-light'>{NOstudents}</b>
+                                </Fab>
+                            </Card>
+                            <div className="col-12 mb-4" style={{ height: '30px' }}>
+                                <h5 style={{ marginLeft: '35%' }}>
+                                    <b style={{textShadow: '0.05em 0.05em 0.05em #34495e', color:'#34495e'}}>
+                                        STUDENTS
+                                    </b>
+                                </h5>
+                            </div>
+                        </Paper>
                     </Grid>
                 </Grid>
                 <Grid container spacing={1} style={{ backgroundColor: 'white', boxShadow: '0.1em 0.1em 0.2em 0.1em', marginTop: '10px' }} >
@@ -245,4 +276,12 @@ class Default extends Component {
     }
 }
 
-export default Default 
+const mapStateToProps = (state) => {
+    return {
+        subjects: state.dataSubjects.dataSubjects.data,
+        teachers: state.dataTeachers.dataTeachers.data,
+        students: state.dataStudents.dataStudents.data,
+    }
+}
+
+export default connect(mapStateToProps, null)(Default) 
