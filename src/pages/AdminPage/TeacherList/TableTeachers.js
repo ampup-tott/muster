@@ -35,7 +35,7 @@ class TableTeachers extends Component {
                         <TableCell style={{ minWidth: 170 }} className='TableCell' align="left">{teacher.email}</TableCell>
                         <TableCell style={{ minWidth: 170 }} className='TableCell' align="left">{teacher.major}</TableCell>
                         <TableCell style={{ minWidth: 170 }} className='TableCell' align="left">{teacher.birthday}</TableCell>
-                        <TableCell style={{ minWidth: 170 }} className='TableCell' align="left">{teacher.email}</TableCell>
+                        <TableCell style={{ minWidth: 170 }} className='TableCell' align="left">{teacher.address}</TableCell>
                     </TableRow>
                 )
             });
@@ -75,7 +75,7 @@ class TableTeachers extends Component {
                                 <TableCell style={{ minWidth: 170 }} className='TableCell' align="left">EMAIL</TableCell>
                                 <TableCell style={{ minWidth: 170 }} className='TableCell' align="left">MAJOR</TableCell>
                                 <TableCell style={{ minWidth: 170 }} className='TableCell' align="left">BIRTHDAY</TableCell>
-                                <TableCell style={{ minWidth: 170 }} className='TableCell' align="left">EMAIL</TableCell>
+                                <TableCell style={{ minWidth: 170 }} className='TableCell' align="left">ADDRESS</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody >
