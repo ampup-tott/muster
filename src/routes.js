@@ -3,6 +3,8 @@ import React from 'react';
 import Login from './pages/LoginPage/Login';
 import Home from './pages/HomePage/Home';
 import Admin from './pages/AdminPage/Admin';
+import About from './pages/AboutPage/index';
+import Contact from './pages/ContactPage/Index'
 
 // const adminLogin = () =>{
 //     if(localStorage.token !== 'undefined'){
@@ -24,19 +26,13 @@ const routes = [
         name: 'ABOUT',
         path: '/about',
         exact : true,
-        main : () => <Home />
-    },
-    {
-        name: 'SERVICES',
-        path: '/services',
-        exact : true,
-        main : () => <Home />
+        main : () => <About />
     },
     {
         name: 'CONTACT',
         path: '/contact',
         exact : true,
-        main : () => <Home />
+        main : () => <Contact />
     },
     {   
         name: 'LOGIN',
